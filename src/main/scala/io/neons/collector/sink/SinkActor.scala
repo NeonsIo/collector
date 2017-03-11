@@ -1,34 +1,27 @@
 package io.neons.collector.sink
 
-import akka.actor.Actor
-import com.typesafe.config.ConfigFactory
-import io.neons.collector.{ReceiveEvent, SendEvent}
-import org.json4s._
-import org.json4s.native.Serialization
-import org.json4s.native.Serialization.write
+import akka.actor.{Actor, Props}
+import io.neons.collector.SendEvent
 import redis.RedisClient
+import akka.routing.{ActorRefRoutee, RoundRobinRoutingLogic, Router}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
+object SinkActor {
+  def props(redisClient: RedisClient): Props = Props(new SinkActor(redisClient))
+}
 
-class SinkActor extends Actor {
+class SinkActor(redisClient: RedisClient) extends Actor {
   implicit val akkaSystem = context.system
-  val conf = ConfigFactory.load("collector")
-  val redis = RedisClient(
-    conf.getString("collector.sink.redis.host"),
-    conf.getInt("collector.sink.redis.port")
-  )
+
+  val router = {
+    val routees = Vector.fill(8) {
+      val sinkActor = akkaSystem.actorOf(RedisSinkActor.props(redisClient))
+      context watch sinkActor
+      ActorRefRoutee(sinkActor)
+    }
+    Router(RoundRobinRoutingLogic(), routees)
+  }
 
   override def receive: Receive = {
-    case SendEvent(event) => {
-        implicit val formats = Serialization.formats(NoTypeHints)
-
-        val result = Future {
-          redis.set(event.requestUuidL.toString, write(event))
-        }
-        Await.result(result, 5 seconds)
-        sender ! ReceiveEvent
-    }
+    case SendEvent(event) => router.route(SendEvent(event), sender())
   }
 }
