@@ -20,16 +20,19 @@ case class SendEvent(event: RawEvent)
 case object ReceiveEvent
 
 object Collector {
+
+  val conf = ConfigFactory.load()
+  implicit val system = ActorSystem("collector")
+  implicit val materializer = ActorMaterializer()
+  implicit val executionContext = system.dispatcher
+  implicit val timeout = Timeout(5 seconds)
+  val redis = RedisClient(
+    conf.getString("collector.sink.redis.host"),
+    conf.getInt("collector.sink.redis.port")
+  )
+
   def main(args: Array[String]) {
-    val conf = ConfigFactory.load()
-    implicit val system = ActorSystem("collector")
-    implicit val materializer = ActorMaterializer()
-    implicit val executionContext = system.dispatcher
-    implicit val timeout = Timeout(5 seconds)
-    val redis = RedisClient(
-      conf.getString("collector.sink.redis.host"),
-      conf.getInt("collector.sink.redis.port")
-    )
+
     val sink = system.actorOf(SinkActor.props(redis), "sink")
 
     val route: Route = get {
