@@ -1,6 +1,7 @@
 package io.neons.collector.model
 
 import akka.http.scaladsl.model.HttpRequest
+
 import scala.collection.mutable.ListBuffer
 
 case class RawHeaderBag(name: String, value: String)

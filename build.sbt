@@ -13,6 +13,8 @@ lazy val root = (project in file(".")).
       scalaTest % Test,
       json4sNative,
       akkaHttp,
+      guice,
+      scalaGuice,
       redis
     )
   )
