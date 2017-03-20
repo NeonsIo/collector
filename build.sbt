@@ -6,8 +6,9 @@ lazy val root = (project in file(".")).
     inThisBuild(List(
       organization := "io.neons",
       scalaVersion := "2.12.1",
-      version      := "0.0.0"
+      version      := "0.0.1"
     )),
+    coverageEnabled := true,
     name := "Collector",
     libraryDependencies ++= Seq(
       scalaTest % Test,
@@ -15,6 +16,9 @@ lazy val root = (project in file(".")).
       akkaHttp,
       guice,
       scalaGuice,
-      redis
-    )
+      redis,
+      akkaHttpTestKit
+    ),
+    mainClass in Compile := Some("io.neons.collector.Application")
   )
+

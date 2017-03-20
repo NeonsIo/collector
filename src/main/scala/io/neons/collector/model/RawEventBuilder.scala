@@ -8,20 +8,25 @@ case class RawHeaderBag(name: String, value: String)
 
 case class RawEvent(requestUuidL: String, method: String, uri: String, headers: ListBuffer[RawHeaderBag], clientIp: String)
 
-class RawEventFactory(httpRequest: HttpRequest, clientIp: String) {
-  def create: RawEvent = {
+object RawEventBuilder {
+  var httpRequest: HttpRequest = _
+  var clientIp: String = _
+  def applyHttpRequest(httpRequest: HttpRequest) = this.httpRequest = httpRequest
+  def applyClientIp(clientIp: String) = this.clientIp = clientIp
+
+  def build: RawEvent = {
     val headersList = new ListBuffer[RawHeaderBag]()
 
-    httpRequest
+    this.httpRequest
       .headers
       .filterNot(p => p.lowercaseName == "timeout-access")
       .foreach(f => headersList += new RawHeaderBag(f.name(), f.value()))
 
     new RawEvent(
       java.util.UUID.randomUUID.toString,
-      httpRequest.method.toString,
-      httpRequest.uri.toString,
+      this.httpRequest.method.toString,
+      this.httpRequest.uri.toString,
       headersList,
-      clientIp)
+      this.clientIp)
   }
 }

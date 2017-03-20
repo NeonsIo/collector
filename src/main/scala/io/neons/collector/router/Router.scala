@@ -8,7 +8,6 @@ import akka.util.Timeout
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import io.neons.collector.guice.config.CollectorConfig
-import io.neons.collector.model.RawEventFactory
 import io.neons.collector.sink.SinkActor
 import io.neons.collector.sink.SinkActor.SendEvent
 import io.neons.collector.directive.CollectorDirectives._
@@ -18,14 +17,11 @@ class Router @Inject()(collectorConfig: CollectorConfig, @Named(SinkActor.name) 
   implicit val timeout = Timeout(5.seconds)
 
   def get: Route = path(collectorConfig.trackerConfig.collectorPath) {
-    extractRequest { request =>
-      extractClientIP { ip =>
-        val event = new RawEventFactory(request, ip.toString).create
+    extractRawRequest { event =>
         onSuccess(sinkActor ? SendEvent(event)) { i =>
           responseWithTransparentPixel
         }
       }
-    }
   } ~
     path(collectorConfig.trackerConfig.javascriptTrackerFile) {
       responseWithJavascriptTrackerSource(collectorConfig.trackerConfig.javascriptTrackerFile)

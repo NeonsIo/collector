@@ -1,13 +1,13 @@
 package io.neons.collector.directive
 
 import java.util.Base64
-
 import akka.http.scaladsl.coding.Gzip
 import akka.http.scaladsl.model.{HttpEntity, HttpResponse}
 import akka.http.scaladsl.model.MediaTypes._
 import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
+import io.neons.collector.model.{RawEventBuilder, RawEvent}
 
 object TransparentPixel {
   val pixel = Base64.getDecoder.decode(
@@ -31,6 +31,19 @@ trait CollectorDirectives {
     }
   }
 
+  def extractRawRequest: Directive1[RawEvent] = {
+    val rawEventBuilder = RawEventBuilder
+
+    extractRequest
+      .flatMap(request => {
+        rawEventBuilder.applyHttpRequest(request)
+        extractClientIP
+      })
+      .flatMap(ip => {
+        rawEventBuilder.applyClientIp(ip.toString)
+        provide(rawEventBuilder.build)
+      })
+  }
 }
 
 object CollectorDirectives extends CollectorDirectives
