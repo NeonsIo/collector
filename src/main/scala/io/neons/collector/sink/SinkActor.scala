@@ -19,7 +19,7 @@ class SinkActor @Inject()(@Named(ProducerSinkActor.name) producerSinkActor: Acto
   implicit val akkaSystem = context.system
 
   val router = {
-    val routees = Vector.fill(1) {
+    val routees = Vector.fill(4) {
       context watch producerSinkActor
       ActorRefRoutee(producerSinkActor)
     }
