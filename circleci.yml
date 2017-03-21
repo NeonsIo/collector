@@ -17,3 +17,7 @@ dependencies:
 general:
   artifacts:
     - "target/scala-2.12"
+
+test:
+  post:
+    - sbt assembly
