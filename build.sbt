@@ -8,7 +8,6 @@ lazy val root = (project in file(".")).
       scalaVersion := "2.12.1",
       version      := "0.0.1"
     )),
-    coverageEnabled := true,
     name := "Collector",
     libraryDependencies ++= Seq(
       scalaTest % Test,

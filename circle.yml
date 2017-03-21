@@ -20,5 +20,4 @@ general:
 
 test:
   post:
-    - sbt coverageReport
     - sbt assembly
