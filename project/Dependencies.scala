@@ -8,4 +8,6 @@ object Dependencies {
   lazy val redis = "com.github.etaty" %% "rediscala" % "1.8.0"
   lazy val guice = "com.google.inject" % "guice" % "4.1.0"
   lazy val scalaGuice = "net.codingwell" %% "scala-guice" % "4.1.0"
+  lazy val logger = "com.typesafe.akka" % "akka-slf4j_2.12" % "2.4.17"
+  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.2.2"
 }
