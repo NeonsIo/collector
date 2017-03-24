@@ -1,4 +1,4 @@
-package io.neons.collector.guice.config
+package io.neons.collector.config
 
 import com.typesafe.config.Config
 

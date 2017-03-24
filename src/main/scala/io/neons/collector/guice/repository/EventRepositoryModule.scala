@@ -1,9 +1,10 @@
-package io.neons.collector.repository
+package io.neons.collector.guice.repository
 
 import akka.actor.ActorSystem
 import com.google.inject.{AbstractModule, Inject, Provider}
-import io.neons.collector.guice.config.CollectorConfig
-import io.neons.collector.repository.RedisClientModule.RedisClientProvider
+import io.neons.collector.config.CollectorConfig
+import io.neons.collector.guice.repository.RedisClientModule.RedisClientProvider
+import io.neons.collector.repository.{EventRepository, RedisEventRepository}
 import net.codingwell.scalaguice.ScalaModule
 import redis.RedisClient
 

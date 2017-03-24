@@ -6,7 +6,7 @@ import akka.actor.{Actor, ActorRef}
 import akka.routing.{ActorRefRoutee, RoundRobinRoutingLogic, Router}
 import com.google.inject.name.Named
 import io.neons.collector.guice.akka.NamedActor
-import io.neons.collector.model.RawEvent
+import io.neons.collector.event.RawEvent
 import io.neons.collector.sink.SinkActor.SendEvent
 
 object SinkActor extends NamedActor {

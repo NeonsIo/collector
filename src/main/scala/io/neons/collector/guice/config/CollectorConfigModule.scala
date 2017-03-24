@@ -2,6 +2,7 @@ package io.neons.collector.guice.config
 
 import com.google.inject.{AbstractModule, Provider}
 import com.typesafe.config.ConfigFactory
+import io.neons.collector.config.CollectorConfig
 import io.neons.collector.guice.config.CollectorConfigModule.CollectorConfigProvider
 import net.codingwell.scalaguice.ScalaModule
 

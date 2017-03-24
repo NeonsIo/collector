@@ -7,7 +7,7 @@ import akka.http.scaladsl.model.MediaTypes._
 import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
-import io.neons.collector.model.{RawEventBuilder, RawEvent}
+import io.neons.collector.event.{RawEventBuilder, RawEvent}
 
 object TransparentPixel {
   val pixel = Base64.getDecoder.decode(

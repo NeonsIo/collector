@@ -7,10 +7,11 @@ import akka.pattern.ask
 import akka.util.Timeout
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import io.neons.collector.guice.config.CollectorConfig
+import io.neons.collector.config.CollectorConfig
 import io.neons.collector.sink.SinkActor
 import io.neons.collector.sink.SinkActor.SendEvent
 import io.neons.collector.directive.CollectorDirectives._
+
 import scala.concurrent.duration._
 
 class Router @Inject()(collectorConfig: CollectorConfig, @Named(SinkActor.name) sinkActor: ActorRef) extends AkkaRouter {

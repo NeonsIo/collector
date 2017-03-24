@@ -4,11 +4,14 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.google.inject.Guice
+import io.neons.collector.config.CollectorConfig
 import io.neons.collector.guice.akka.{ActorMaterializerModule, AkkaModule}
-import io.neons.collector.guice.config.{CollectorConfig, CollectorConfigModule}
-import io.neons.collector.repository.EventRepositoryModule
-import io.neons.collector.router.{AkkaRouter, RouterModule}
-import io.neons.collector.sink.{ProducerSinkActorModule, SinkActorModule}
+import io.neons.collector.guice.config.CollectorConfigModule
+import io.neons.collector.guice.repository.EventRepositoryModule
+import io.neons.collector.guice.router.RouterModule
+import io.neons.collector.guice.sink.{ProducerSinkActorModule, SinkActorModule}
+import io.neons.collector.router.AkkaRouter
+
 import scala.io.StdIn
 
 object Application {
