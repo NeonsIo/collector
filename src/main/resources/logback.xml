@@ -1,8 +1,6 @@
 <configuration>
-    <!-- Properties are set below, alternatively they can be set as system
-         properties or passed as command line arguments -->
     <property name="LOG_HOME" value="logs" />
-    <property name="LOG_FILE_NAME" value="application.log" />
+    <property name="LOG_FILE_NAME" value="collector.log" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

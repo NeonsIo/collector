@@ -15,10 +15,10 @@ lazy val root = (project in file(".")).
       akkaHttp,
       guice,
       scalaGuice,
-      redis,
+      kafka,
       akkaHttpTestKit,
-      logger,
-      logback
+      logback,
+      logger
     ),
     mainClass in Compile := Some("io.neons.collector.Application")
   )

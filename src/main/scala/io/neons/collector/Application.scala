@@ -11,7 +11,6 @@ import io.neons.collector.guice.repository.EventRepositoryModule
 import io.neons.collector.guice.router.RouterModule
 import io.neons.collector.guice.sink.{ProducerSinkActorModule, SinkActorModule}
 import io.neons.collector.router.AkkaRouter
-
 import scala.io.StdIn
 
 object Application {

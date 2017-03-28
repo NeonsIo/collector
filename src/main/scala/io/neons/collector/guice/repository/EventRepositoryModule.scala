@@ -1,29 +1,32 @@
 package io.neons.collector.guice.repository
 
-import akka.actor.ActorSystem
+import java.util.Properties
 import com.google.inject.{AbstractModule, Inject, Provider}
 import io.neons.collector.config.CollectorConfig
-import io.neons.collector.guice.repository.RedisClientModule.RedisClientProvider
-import io.neons.collector.repository.{EventRepository, RedisEventRepository}
+import io.neons.collector.guice.repository.KafkaProducerModule.KafkaProducerModuleProvider
+import io.neons.collector.repository.{EventRepository, KafkaEventRepository}
 import net.codingwell.scalaguice.ScalaModule
-import redis.RedisClient
+import org.apache.kafka.clients.producer.KafkaProducer
 
-object RedisClientModule {
-  class RedisClientProvider @Inject()(collectorConfig: CollectorConfig, actorSystem: ActorSystem) extends Provider[RedisClient] {
-    override def get(): RedisClient = {
-      RedisClient(
-        host = collectorConfig.sink.redisSinkConfig.host,
-        port = collectorConfig.sink.redisSinkConfig.port
-      )(
-        _system = actorSystem
-      )
+object KafkaProducerModule {
+  class KafkaProducerModuleProvider @Inject()(collectorConfig: CollectorConfig) extends Provider[KafkaProducer[String, String]] {
+    override def get(): KafkaProducer[String, String] = {
+      val kafkaConfig = collectorConfig.sink.kafkaSinkConfig
+      val properties = new Properties()
+      properties.put("bootstrap.servers", kafkaConfig.host.concat(":").concat(kafkaConfig.port.toString))
+      properties.put("client.id", kafkaConfig.clientId)
+      properties.put("acks", "all")
+      properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+      properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+
+      new KafkaProducer[String, String](properties)
     }
   }
 }
 
 class EventRepositoryModule extends AbstractModule with ScalaModule {
   override def configure(): Unit = {
-    bind[EventRepository].to[RedisEventRepository].asEagerSingleton()
-    bind[RedisClient].toProvider[RedisClientProvider].asEagerSingleton()
+    bind[EventRepository].to[KafkaEventRepository].asEagerSingleton()
+    bind[KafkaProducer[String, String]].toProvider[KafkaProducerModuleProvider].asEagerSingleton()
   }
 }

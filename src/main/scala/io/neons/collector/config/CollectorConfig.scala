@@ -4,9 +4,9 @@ import com.typesafe.config.Config
 
 case class BaseConfig(host: String, port: Int)
 
-case class SinkConfig(redisSinkConfig: RedisSinkConfig)
+case class SinkConfig(kafkaSinkConfig: KafkaSinkConfig)
 
-case class RedisSinkConfig(host: String, port: Int)
+case class KafkaSinkConfig(host: String, port: Int, topic: String, clientId: String)
 
 case class TrackerConfig(collectorPath: String, javascriptTrackerFile: String)
 
@@ -24,9 +24,11 @@ object CollectorConfig {
         javascriptTrackerFile = config.getString("collector.tracker.javascript-tracker-file")
       ),
       sink = SinkConfig(
-        redisSinkConfig = RedisSinkConfig(
-          host = config.getString("collector.sink.redis.host"),
-          port = config.getInt("collector.sink.redis.port")
+        kafkaSinkConfig = KafkaSinkConfig(
+          host = config.getString("collector.sink.kafka.host"),
+          port = config.getInt("collector.sink.kafka.port"),
+          topic = config.getString("collector.sink.kafka.topic"),
+          clientId = config.getString("collector.sink.kafka.client-id")
         )
       )
     )

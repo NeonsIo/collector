@@ -8,7 +8,6 @@ import io.neons.collector.sink.SinkActor.{ReceiveEvent, SendEvent}
 import org.json4s.NoTypeHints
 import org.json4s.native.Serialization
 import org.json4s.native.Serialization._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
@@ -26,7 +25,7 @@ class ProducerSinkActor @Inject()(eventRepository: EventRepository) extends Acto
       val result = Future {
         eventRepository.add(event.requestUuidL, write(event))
       }
-      Await.result(result, 1.seconds)
+      Await.result(result, 5.seconds)
       sender ! ReceiveEvent
   }
 }
