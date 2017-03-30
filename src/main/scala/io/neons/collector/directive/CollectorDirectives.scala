@@ -7,7 +7,7 @@ import akka.http.scaladsl.model.MediaTypes._
 import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
-import io.neons.collector.event.{RawEventBuilder, RawEvent}
+import io.neons.collector.event.{EventBuilder, Event}
 
 object TransparentPixel {
   val pixel = Base64.getDecoder.decode(
@@ -31,17 +31,17 @@ trait CollectorDirectives {
     }
   }
 
-  def extractRawRequest: Directive1[RawEvent] = {
-    val rawEventBuilder = RawEventBuilder
+  def extractRawRequest: Directive1[Event] = {
+    val eventBuilder = EventBuilder
 
     extractRequest
       .flatMap(request => {
-        rawEventBuilder.applyHttpRequest(request)
+        eventBuilder.applyHttpRequest(request)
         extractClientIP
       })
       .flatMap(ip => {
-        rawEventBuilder.applyClientIp(ip.toString)
-        provide(rawEventBuilder.build)
+        eventBuilder.applyClientIp(ip.toString)
+        provide(eventBuilder.build)
       })
   }
 }

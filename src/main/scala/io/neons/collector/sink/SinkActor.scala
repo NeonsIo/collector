@@ -6,12 +6,12 @@ import akka.actor.{Actor, ActorRef}
 import akka.routing.{ActorRefRoutee, RoundRobinRoutingLogic, Router}
 import com.google.inject.name.Named
 import io.neons.collector.guice.akka.NamedActor
-import io.neons.collector.event.RawEvent
+import io.neons.collector.event.Event
 import io.neons.collector.sink.SinkActor.SendEvent
 
 object SinkActor extends NamedActor {
   override final val name = "SinkActor"
-  case class SendEvent(event: RawEvent)
+  case class SendEvent(event: Event)
   case object ReceiveEvent
 }
 

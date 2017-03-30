@@ -7,10 +7,10 @@ import com.google.inject.Guice
 import io.neons.collector.config.CollectorConfig
 import io.neons.collector.guice.akka.{ActorMaterializerModule, AkkaModule}
 import io.neons.collector.guice.config.CollectorConfigModule
-import io.neons.collector.guice.repository.EventRepositoryModule
+import io.neons.collector.guice.producer.EventProducerModule
 import io.neons.collector.guice.router.RouterModule
 import io.neons.collector.guice.sink.{ProducerSinkActorModule, SinkActorModule}
-import io.neons.collector.router.AkkaRouter
+import io.neons.collector.router.Router
 import scala.io.StdIn
 
 object Application {
@@ -19,7 +19,7 @@ object Application {
     new ActorMaterializerModule(),
     new CollectorConfigModule(),
     new ProducerSinkActorModule(),
-    new EventRepositoryModule(),
+    new EventProducerModule(),
     new SinkActorModule(),
     new RouterModule()
   )
@@ -31,7 +31,7 @@ object Application {
 
   def main(args: Array[String]) {
     val bindingFuture = Http().bindAndHandle(
-      injector.getInstance(classOf[AkkaRouter]).get,
+      injector.getInstance(classOf[Router]).get,
       config.baseConfig.host,
       config.baseConfig.port
     )
