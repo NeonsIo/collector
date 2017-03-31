@@ -6,12 +6,12 @@ import akka.actor.{Actor, ActorRef}
 import akka.routing.{ActorRefRoutee, RoundRobinRoutingLogic, Router}
 import com.google.inject.name.Named
 import io.neons.collector.guice.akka.NamedActor
-import io.neons.collector.event.Event
-import io.neons.collector.sink.SinkActor.SendEvent
+import io.neons.collector.log.Log
+import io.neons.collector.sink.SinkActor.SendLog
 
 object SinkActor extends NamedActor {
   override final val name = "SinkActor"
-  case class SendEvent(event: Event)
+  case class SendLog(log: Log)
   case object ReceiveEvent
 }
 
@@ -27,6 +27,6 @@ class SinkActor @Inject()(@Named(ProducerSinkActor.name) producerSinkActor: Acto
   }
 
   override def receive: Receive = {
-    case SendEvent(event) => router.route(SendEvent(event), sender())
+    case SendLog(log) => router.route(SendLog(log), sender())
   }
 }

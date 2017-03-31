@@ -1,4 +1,4 @@
-package io.neons.collector.event
+package io.neons.collector.log
 
 import akka.http.scaladsl.model.HttpRequest
 import java.time._
@@ -6,21 +6,21 @@ import scala.collection.mutable.ListBuffer
 
 case class HeaderBag(name: String, value: String)
 
-case class Event(requestUuidL: String,
-                 method: String,
-                 uri: String,
-                 headers: ListBuffer[HeaderBag],
-                 cookies: ListBuffer[HeaderBag],
-                 clientIp: String,
-                 serverDate: String)
+case class Log(requestUuidL: String,
+               method: String,
+               uri: String,
+               headers: ListBuffer[HeaderBag],
+               cookies: ListBuffer[HeaderBag],
+               clientIp: String,
+               serverDate: String)
 
-object EventBuilder {
+object LogBuilder {
   var httpRequest: HttpRequest = _
   var clientIp: String = _
   def applyHttpRequest(httpRequest: HttpRequest) = this.httpRequest = httpRequest
   def applyClientIp(clientIp: String) = this.clientIp = clientIp
 
-  def build: Event = {
+  def build: Log = {
     val headersList = new ListBuffer[HeaderBag]()
     val cookiesList = new ListBuffer[HeaderBag]()
     val zonedDateTime = ZonedDateTime.now.withZoneSameInstant(ZoneId.of("UTC")).toString
@@ -35,9 +35,9 @@ object EventBuilder {
       .cookies
       .foreach(f => cookiesList += new HeaderBag(f.name, f.value))
 
-    new Event(
+    new Log(
       java.util.UUID.randomUUID.toString,
-      this.httpRequest.method.toString,
+      this.httpRequest.method.value,
       this.httpRequest.uri.toString,
       headersList,
       cookiesList,
