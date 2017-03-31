@@ -1,6 +1,7 @@
 # Neons log collector
 
 [![CircleCI](https://circleci.com/gh/NeonsIo/collector.svg?style=svg)](https://circleci.com/gh/NeonsIo/collector)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b629773816d446c2bf419f9c7de9d192)](https://www.codacy.com/app/michalsikora/collector?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=NeonsIo/collector&amp;utm_campaign=Badge_Grade)
 
 ## Goals 
 
