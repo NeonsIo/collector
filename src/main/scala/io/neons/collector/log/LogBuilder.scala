@@ -1,7 +1,7 @@
 package io.neons.collector.log
 
 import akka.http.scaladsl.model.HttpRequest
-import java.time._
+
 import scala.collection.mutable.ListBuffer
 
 case class HeaderBag(name: String, value: String)
@@ -12,7 +12,7 @@ case class Log(requestUuidL: String,
                headers: ListBuffer[HeaderBag],
                cookies: ListBuffer[HeaderBag],
                clientIp: String,
-               serverDate: String)
+               serverDate: Long)
 
 object LogBuilder {
   var httpRequest: HttpRequest = _
@@ -23,7 +23,7 @@ object LogBuilder {
   def build: Log = {
     val headersList = new ListBuffer[HeaderBag]()
     val cookiesList = new ListBuffer[HeaderBag]()
-    val zonedDateTime = ZonedDateTime.now.withZoneSameInstant(ZoneId.of("UTC")).toString
+    val zonedDateTime = System.currentTimeMillis()
 
     this.httpRequest
       .headers
@@ -42,7 +42,7 @@ object LogBuilder {
       headersList,
       cookiesList,
       this.clientIp,
-      zonedDateTime.toString
+      zonedDateTime
     )
   }
 }
