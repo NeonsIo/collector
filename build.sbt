@@ -18,7 +18,8 @@ lazy val root = (project in file(".")).
       kafka,
       akkaHttpTestKit,
       logback,
-      logger
+      logger,
+      scalaMock
     ),
     mainClass in Compile := Some("io.neons.collector.Application")
   )

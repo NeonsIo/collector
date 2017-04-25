@@ -2,7 +2,7 @@ package io.neons.collector.config
 
 import com.typesafe.config.Config
 
-case class BaseConfig(host: String, port: Int)
+case class BaseConfig(host: String, port: Int, cookieName: String, cookieDomain: String)
 
 case class SinkConfig(kafkaSinkConfig: KafkaSinkConfig)
 
@@ -17,7 +17,9 @@ object CollectorConfig {
     CollectorConfig(
       baseConfig = BaseConfig(
         host = config.getString("collector.base.host"),
-        port = config.getInt("collector.base.port")
+        port = config.getInt("collector.base.port"),
+        cookieName = config.getString("collector.base.cookie-name"),
+        cookieDomain = config.getString("collector.base.cookie-domain")
       ),
       trackerConfig = TrackerConfig(
         collectorPath = config.getString("collector.tracker.collector-path"),

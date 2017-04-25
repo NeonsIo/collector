@@ -1,16 +1,17 @@
 package io.neons.collector.directive
 
-import java.util.Base64
+import java.util.{Base64, UUID}
+
 import akka.http.scaladsl.coding.Gzip
-import akka.http.scaladsl.model.{HttpEntity, HttpResponse}
+import akka.http.scaladsl.model.{DateTime, HttpEntity, HttpResponse}
 import akka.http.scaladsl.model.MediaTypes._
-import akka.http.scaladsl.model.headers.RawHeader
+import akka.http.scaladsl.model.headers.{HttpCookie, RawHeader}
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
-import io.neons.collector.log.{LogBuilder, Log}
+import io.neons.collector.log.{Log, LogBuilder}
 
 object TransparentPixel {
-  val pixel = Base64.getDecoder.decode(
+  val pixel: Array[Byte] = Base64.getDecoder.decode(
     "R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
   )
 }
@@ -43,6 +44,26 @@ trait CollectorDirectives {
         logBuilder.applyClientIp(ip.toOption.map(_.getHostAddress).getOrElse("unknown"))
         provide(logBuilder.build)
       })
+  }
+
+  def setVisitorCookieAndResponse(name: String, domain: String): Route = {
+    optionalCookie(name) {
+      case Some(nameCookie) => setCookie(getHttpCookie(name, nameCookie.value, domain)) {
+        responseWithTransparentPixel
+      }
+      case None => setCookie(getHttpCookie(name, UUID.randomUUID().toString, domain)) {
+        responseWithTransparentPixel
+      }
+    }
+  }
+
+  def getHttpCookie(name: String, value: String, domain: String): HttpCookie = {
+    HttpCookie(name,
+      value = value,
+      domain = Some(domain),
+      expires = Some(DateTime(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 30 * 365))),
+      path = Some("/")
+    )
   }
 }
 

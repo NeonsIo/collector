@@ -1,4 +1,4 @@
-package io.neons.collector.direcive
+package io.neons.collector.directive
 
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.{Matchers, WordSpec}

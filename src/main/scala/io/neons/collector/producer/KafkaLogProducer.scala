@@ -1,6 +1,6 @@
 package io.neons.collector.producer
 
-import java.util.UUID
+import  java.util.UUID
 
 import com.google.inject.Inject
 import io.neons.collector.config.CollectorConfig

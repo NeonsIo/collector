@@ -17,8 +17,8 @@ case class Log(requestUuidL: String,
 object LogBuilder {
   var httpRequest: HttpRequest = _
   var clientIp: String = _
-  def applyHttpRequest(httpRequest: HttpRequest) = this.httpRequest = httpRequest
-  def applyClientIp(clientIp: String) = this.clientIp = clientIp
+  def applyHttpRequest(httpRequest: HttpRequest): Unit = this.httpRequest = httpRequest
+  def applyClientIp(clientIp: String): Unit = this.clientIp = clientIp
 
   def build: Log = {
     val headersList = new ListBuffer[HeaderBag]()
@@ -29,13 +29,13 @@ object LogBuilder {
       .headers
       .filterNot(p => p.lowercaseName == "timeout-access")
       .filterNot(p => p.lowercaseName() == "cookie")
-      .foreach(f => headersList += new HeaderBag(f.name, f.value))
+      .foreach(f => headersList += HeaderBag(f.name, f.value))
 
     this.httpRequest
       .cookies
-      .foreach(f => cookiesList += new HeaderBag(f.name, f.value))
+      .foreach(f => cookiesList += HeaderBag(f.name, f.value))
 
-    new Log(
+    Log(
       java.util.UUID.randomUUID.toString,
       this.httpRequest.method.value,
       this.httpRequest.uri.toString,
