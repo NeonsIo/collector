@@ -2,7 +2,7 @@ import sbt._
 
 object Dependencies {
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.0.1"
-  lazy val scalaMock = "org.scalamock" %% "scalamock-scalatest-support" % "3.5.0" % Test
+  lazy val scalaMock = "org.mockito" % "mockito-all" % "1.8.4"
   lazy val akkaHttpTestKit = "com.typesafe.akka" %% "akka-http-testkit" % "10.0.4"
   lazy val json4sNative = "org.json4s" %% "json4s-native" % "3.5.0"
   lazy val akkaHttp = "com.typesafe.akka" %% "akka-http" % "10.0.3"

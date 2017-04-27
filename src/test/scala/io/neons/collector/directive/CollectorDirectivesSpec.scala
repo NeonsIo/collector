@@ -6,14 +6,12 @@ import io.neons.collector.directive.CollectorDirectives._
 
 class CollectorDirectivesSpec extends WordSpec with Matchers with ScalatestRouteTest {
   "The directives for collector" should {
-
     "return transparent pixel" in {
       Get("/collect") ~> responseWithTransparentPixel ~> check {
         responseAs.status.intValue should be (200)
         responseAs.entity.contentType.mediaType.isImage should be (true)
       }
     }
-
     "return javascript tracker source with headers" in {
       Get("/index.js") ~> responseWithJavascriptTrackerSource("index.js") ~> check {
         responseAs.status.intValue should be (200)
@@ -22,6 +20,5 @@ class CollectorDirectivesSpec extends WordSpec with Matchers with ScalatestRoute
         responseAs.headers.filter(p => p.name() == "Content-Encoding").foreach(f => f.value() should be ("gzip"))
       }
     }
-
   }
 }
