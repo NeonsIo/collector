@@ -1,6 +1,6 @@
 package io.neons.collector.guice.akka
 
-import akka.actor.{ActorRef, ActorSystem, ExtendedActorSystem, Extension, ExtensionId, ExtensionIdProvider, Props}
+import akka.actor._
 import com.google.inject.Injector
 
 class GuiceAkkaExtensionImpl extends Extension {

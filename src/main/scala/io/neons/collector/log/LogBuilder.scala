@@ -15,33 +15,28 @@ case class Log(requestUuidL: String,
                serverDate: Long)
 
 object LogBuilder {
-  var httpRequest: HttpRequest = _
-  var clientIp: String = _
-  def applyHttpRequest(httpRequest: HttpRequest): Unit = this.httpRequest = httpRequest
-  def applyClientIp(clientIp: String): Unit = this.clientIp = clientIp
-
-  def build: Log = {
+  def build(httpRequest: HttpRequest, clientIp: String): Log = {
     val headersList = new ListBuffer[HeaderBag]()
     val cookiesList = new ListBuffer[HeaderBag]()
     val zonedDateTime = System.currentTimeMillis()
 
-    this.httpRequest
+    httpRequest
       .headers
       .filterNot(p => p.lowercaseName == "timeout-access")
       .filterNot(p => p.lowercaseName() == "cookie")
       .foreach(f => headersList += HeaderBag(f.name, f.value))
 
-    this.httpRequest
+    httpRequest
       .cookies
       .foreach(f => cookiesList += HeaderBag(f.name, f.value))
 
     Log(
       java.util.UUID.randomUUID.toString,
-      this.httpRequest.method.value,
-      this.httpRequest.uri.toString,
+      httpRequest.method.value,
+      httpRequest.uri.toString,
       headersList,
       cookiesList,
-      this.clientIp,
+      clientIp,
       zonedDateTime
     )
   }

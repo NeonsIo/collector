@@ -33,20 +33,21 @@ trait CollectorDirectives {
   }
 
   def extractRawRequest: Directive1[Log] = {
+    val requestCollector = Seq()
     val logBuilder = LogBuilder
 
     extractRequest
       .flatMap(request => {
-        logBuilder.applyHttpRequest(request)
+        requestCollector :+ request
         extractClientIP
       })
       .flatMap(ip => {
-        logBuilder.applyClientIp(ip.toOption.map(_.getHostAddress).getOrElse("unknown"))
-        provide(logBuilder.build)
+        requestCollector :+ ip.toOption.map(_.getHostAddress).getOrElse("unknown")
+        provide(logBuilder.build(requestCollector.head, requestCollector.last))
       })
   }
 
-  def setVisitorCookieAndResponse(name: String, domain: String): Route = {
+  def responseWithCookieVisitorId(name: String, domain: String): Route = {
     optionalCookie(name) {
       case Some(nameCookie) => setCookie(getHttpCookie(name, nameCookie.value, domain)) {
         responseWithTransparentPixel

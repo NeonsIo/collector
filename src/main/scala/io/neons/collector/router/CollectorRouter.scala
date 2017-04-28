@@ -19,7 +19,7 @@ class CollectorRouter @Inject()(collectorConfig: CollectorConfig, @Named(SinkAct
   def get: Route = path(collectorConfig.trackerConfig.collectorPath) {
     extractRawRequest { log =>
         onSuccess(sinkActor ? SendLog(log)) { _ =>
-          setVisitorCookieAndResponse(collectorConfig.baseConfig.cookieName, collectorConfig.baseConfig.cookieDomain)
+          responseWithCookieVisitorId(collectorConfig.baseConfig.cookieName, collectorConfig.baseConfig.cookieDomain)
         }
       }
   } ~
