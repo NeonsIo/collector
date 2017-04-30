@@ -1,6 +1,6 @@
 package io.neons.testcase
 
-import io.neons.collector.config._
+import io.neons.collector.application.config._
 
 trait CollectorConfigTestCase {
   val collectorConfig = CollectorConfig(
