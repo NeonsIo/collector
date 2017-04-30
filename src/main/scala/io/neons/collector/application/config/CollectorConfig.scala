@@ -2,7 +2,7 @@ package io.neons.collector.application.config
 
 import com.typesafe.config.Config
 
-case class BaseConfig(host: String, port: Int, cookieName: String, cookieDomain: String)
+case class ApplicationConfig(host: String, port: Int, cookieName: String, cookieDomain: String)
 
 case class SinkConfig(kafkaSinkConfig: KafkaSinkConfig)
 
@@ -10,16 +10,16 @@ case class KafkaSinkConfig(host: String, port: Int, topic: String, clientId: Str
 
 case class TrackerConfig(collectorPath: String, javascriptTrackerFile: String)
 
-case class CollectorConfig(baseConfig: BaseConfig, trackerConfig: TrackerConfig, sink: SinkConfig)
+case class CollectorConfig(applicationConfig: ApplicationConfig, trackerConfig: TrackerConfig, sink: SinkConfig)
 
 object CollectorConfig {
   def load(config: Config) = {
     CollectorConfig(
-      baseConfig = BaseConfig(
-        host = config.getString("collector.base.host"),
-        port = config.getInt("collector.base.port"),
-        cookieName = config.getString("collector.base.cookie-name"),
-        cookieDomain = config.getString("collector.base.cookie-domain")
+      applicationConfig = ApplicationConfig(
+        host = config.getString("collector.application.host"),
+        port = config.getInt("collector.application.port"),
+        cookieName = config.getString("collector.application.cookie-name"),
+        cookieDomain = config.getString("collector.application.cookie-domain")
       ),
       trackerConfig = TrackerConfig(
         collectorPath = config.getString("collector.tracker.collector-path"),

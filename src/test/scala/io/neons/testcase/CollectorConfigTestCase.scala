@@ -4,7 +4,7 @@ import io.neons.collector.application.config._
 
 trait CollectorConfigTestCase {
   val collectorConfig = CollectorConfig(
-    baseConfig = BaseConfig(
+    applicationConfig = ApplicationConfig(
       host = "localhost",
       port = 80,
       cookieName = "cookieName",

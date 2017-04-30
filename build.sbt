@@ -21,6 +21,5 @@ lazy val root = (project in file(".")).
       logger,
       scalaMock
     ),
-    mainClass in Compile := Some("io.neons.collector.application.Application")
+    mainClass in Compile := Some("io.neons.collector.application.akka.http.Application")
   )
-
