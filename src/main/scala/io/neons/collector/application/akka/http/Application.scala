@@ -9,9 +9,8 @@ import io.neons.collector.application.guice.application.config.CollectorConfigMo
 import io.neons.collector.application.guice.infrastructure.log.builder.LogBuilderModule
 import io.neons.collector.application.guice.application.akka.http.router.RouterModule
 import io.neons.collector.application.akka.http.router.Router
-import io.neons.collector.application.guice.application.akka.actor.{ActorMaterializerModule, AkkaModule, SinkActorModule, SinkRouterActorModule}
+import io.neons.collector.application.guice.application.akka.actor._
 import io.neons.collector.application.guice.infrastructure.log.sink.LogSinkModule
-
 import scala.io.StdIn
 
 object Application {
@@ -19,9 +18,7 @@ object Application {
     new AkkaModule(),
     new ActorMaterializerModule(),
     new CollectorConfigModule(),
-    new SinkActorModule(),
     new LogSinkModule(),
-    new SinkRouterActorModule(),
     new RouterModule(),
     new LogBuilderModule()
   )

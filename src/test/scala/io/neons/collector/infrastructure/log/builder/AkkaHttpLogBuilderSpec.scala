@@ -7,10 +7,9 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.model.headers.RawHeader
 import io.neons.collector.application.akka.http.directive.TransparentPixel
 import io.neons.testcase.CollectorConfigTestCase
-import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{FlatSpec, Matchers}
 
-class AkkaHttpLogBuilderSpec extends FlatSpec with Matchers with MockitoSugar with CollectorConfigTestCase {
+class AkkaHttpLogBuilderSpec extends FlatSpec with Matchers with CollectorConfigTestCase {
   "Log builder" should "build log from http request and client ip" in {
     val builder = new AkkaHttpLogBuilder()
     builder.addClientIp("91.100.100.1")

@@ -11,8 +11,8 @@ trait CollectorConfigTestCase {
       cookieDomain = "localhost"
     ),
     trackerConfig = TrackerConfig(
-      collectorPath = "/",
-      javascriptTrackerFile = "index.min.js"
+      collectorPath = "collect",
+      javascriptTrackerFile = "index.js"
     ),
     sink = SinkConfig(
       kafkaSinkConfig = KafkaSinkConfig(
