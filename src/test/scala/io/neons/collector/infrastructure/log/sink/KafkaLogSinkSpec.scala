@@ -25,7 +25,6 @@ class KafkaLogSinkSpec extends FlatSpec with Matchers with MockitoSugar with Col
         "127.0.0.1",
         1493239462820L
       )
-      val t = producer.sendToSink(log)
-
+      producer.sendToSink(log)
   }
 }

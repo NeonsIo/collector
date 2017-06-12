@@ -17,6 +17,8 @@ object LogSinkModule {
       val properties = new Properties()
       properties.put("bootstrap.servers", kafkaConfig.host.concat(":").concat(kafkaConfig.port.toString))
       properties.put("client.id", kafkaConfig.clientId)
+      properties.put("max.block.ms", "5000")
+      properties.put("request.timeout.ms", "10000")
       properties.put("acks", "all")
       properties.put("key.serializer", "io.neons.collector.application.guice.infrastructure.log.sink.serialization.UuidSerializer")
       properties.put("value.serializer", "io.neons.collector.application.guice.infrastructure.log.sink.serialization.RawEventSerializer")

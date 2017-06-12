@@ -2,6 +2,7 @@ import Dependencies._
 import sbt.Keys._
 
 enablePlugins(DockerPlugin)
+resolvers += Resolver.jcenterRepo
 
 lazy val root = (project in file(".")).
   settings(
@@ -21,7 +22,8 @@ lazy val root = (project in file(".")).
       akkaHttpTestKit,
       logback,
       logger,
-      scalaMock
+      scalaMock,
+      "io.github.lhotari" %% "akka-http-health" % "1.0.8"
     ),
     mainClass in Compile := Some("io.neons.collector.application.akka.http.Application")
   )

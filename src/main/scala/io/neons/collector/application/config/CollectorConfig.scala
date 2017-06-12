@@ -2,7 +2,7 @@ package io.neons.collector.application.config
 
 import com.typesafe.config.Config
 
-case class ApplicationConfig(host: String, port: Int, cookieName: String, cookieDomain: String)
+case class ApplicationConfig(port: Int, cookieName: String, cookieDomain: String)
 
 case class SinkConfig(kafkaSinkConfig: KafkaSinkConfig)
 
@@ -16,7 +16,6 @@ object CollectorConfig {
   def load(config: Config) = {
     CollectorConfig(
       applicationConfig = ApplicationConfig(
-        host = config.getString("collector.application.host"),
         port = config.getInt("collector.application.port"),
         cookieName = config.getString("collector.application.cookie-name"),
         cookieDomain = config.getString("collector.application.cookie-domain")
