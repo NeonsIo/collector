@@ -4,8 +4,7 @@ import java.util.UUID
 
 import io.neons.collector.model.log.{Log, LogHeaderBag}
 import io.neons.testcase.CollectorConfigTestCase
-import org.apache.kafka.clients.producer.{Callback, KafkaProducer, ProducerRecord, RecordMetadata}
-import org.mockito.Mockito._
+import org.apache.kafka.clients.producer.KafkaProducer
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{FlatSpec, Matchers}
 

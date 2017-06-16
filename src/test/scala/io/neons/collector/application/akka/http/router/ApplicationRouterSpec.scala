@@ -43,6 +43,11 @@ class ApplicationRouterSpec extends MockitoSugar with WordSpecLike with Matchers
         responseAs.status.intValue should be (200)
         responseAs.entity.contentType.mediaType.isImage should be (true)
       }
+
+      Get("/collect") ~> router ~> check {
+        responseAs.status.intValue should be (200)
+        responseAs.entity.contentType.mediaType.isImage should be (true)
+      }
     }
   }
 }

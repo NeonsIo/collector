@@ -21,3 +21,14 @@ general:
 test:
   post:
     - sbt assembly
+
+deployment:
+  release:
+    tag: /[0-9]+(\.[0-9]+)*/
+    owner: circleci
+    commands:
+      - sbt assembly
+      - sbt docker
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker tag neons/collector:$CIRCLE_TAG neons/collector:latest
+      - docker push neons/collector

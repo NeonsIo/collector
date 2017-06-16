@@ -13,8 +13,8 @@ import io.neons.collector.application.guice.application.akka.http.router.RouterM
 import io.neons.collector.application.akka.http.router.Router
 import io.neons.collector.application.guice.application.akka.actor._
 import io.neons.collector.application.guice.infrastructure.log.sink.LogSinkModule
-
-import scala.io.StdIn
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
 object Application {
   val injector = Guice.createInjector(
@@ -46,7 +46,16 @@ object Application {
       config.applicationConfig.port
     )
 
-    StdIn.readLine()
-    bindingFuture.flatMap(_.unbind()).onComplete(_ => actorSystem.terminate())
+    scala.sys.addShutdownHook {
+      println("Terminating...")
+      bindingFuture
+        .flatMap(_.unbind())
+        .onComplete { _ =>
+          materializer.shutdown()
+          actorSystem.terminate()
+        }
+      Await.result(actorSystem.whenTerminated, 60.seconds)
+      println("Terminated... Bye")
+    }
   }
 }

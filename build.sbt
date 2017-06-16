@@ -9,7 +9,7 @@ lazy val root = (project in file(".")).
     inThisBuild(List(
       organization := "neons",
       scalaVersion := "2.12.1",
-      version      := "0.0.1"
+      version      := "1.0.0"
     )),
     name := "collector",
     libraryDependencies ++= Seq(
@@ -23,7 +23,7 @@ lazy val root = (project in file(".")).
       logback,
       logger,
       scalaMock,
-      "io.github.lhotari" %% "akka-http-health" % "1.0.8"
+      health
     ),
     mainClass in Compile := Some("io.neons.collector.application.akka.http.Application")
   )

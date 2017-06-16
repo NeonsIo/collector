@@ -1,8 +1,10 @@
 package io.neons.collector.application.akka.http
 
-/**
-  * Created by michal on 16.06.17.
-  */
-class ApplicationSpec {
+import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.mockito.MockitoSugar
 
+class ApplicationSpec extends FlatSpec with Matchers with MockitoSugar {
+  "Application" should "bootstrap and run server" in {
+    Application.main(new Array[String](0))
+  }
 }

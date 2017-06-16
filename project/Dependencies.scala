@@ -16,4 +16,5 @@ object Dependencies {
   lazy val scalaGuice = "net.codingwell" %% "scala-guice" % "4.1.0"
   lazy val logger = "com.typesafe.akka" % "akka-slf4j_2.12" % "2.4.18"
   lazy val logback = "ch.qos.logback" % "logback-classic" % "1.2.3"
+  lazy val health = "io.github.lhotari" %% "akka-http-health" % "1.0.8"
 }
