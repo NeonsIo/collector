@@ -30,7 +30,7 @@ class ApplicationRouterSpec extends MockitoSugar with WordSpecLike with Matchers
       val logBuilder = mock[AkkaHttpLogBuilder]
       when(logBuilder.build).thenReturn(log)
       when(logSink.sendToSink(log)).thenReturn(Future.successful("test"))
-      val router = new ApplicationRouter(collectorConfig, logBuilder, logSink).get
+      val router = new ApplicationRouter(collectorConfig, logBuilder, logSink).retrieve
 
       Get("/index.js") ~> router ~> check {
         responseAs.status.intValue should be (200)

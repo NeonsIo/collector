@@ -25,7 +25,7 @@ test:
 deployment:
   release:
     tag: /[0-9]+(\.[0-9]+)*/
-    owner: circleci
+    owner: neonsio
     commands:
       - sbt assembly
       - sbt docker

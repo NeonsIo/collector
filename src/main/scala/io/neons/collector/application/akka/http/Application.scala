@@ -41,7 +41,7 @@ object Application {
 
   def main(args: Array[String]) {
     val bindingFuture = Http().bindAndHandle(
-      injector.getInstance(classOf[Router]).get,
+      injector.getInstance(classOf[Router]).retrieve,
       "0.0.0.0",
       config.applicationConfig.port
     )

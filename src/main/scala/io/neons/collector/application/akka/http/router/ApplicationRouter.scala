@@ -10,7 +10,7 @@ import io.neons.collector.model.log.{LogBuilder, LogSink}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class ApplicationRouter @Inject()(collectorConfig: CollectorConfig, logBuilder: LogBuilder, logSink: LogSink) extends Router {
-  def get: Route = path(collectorConfig.trackerConfig.collectorPath) {
+  def retrieve: Route = path(collectorConfig.trackerConfig.collectorPath) {
     extractRawRequest(logBuilder) { log =>
       onSuccess(logSink.sendToSink(log)) { _ =>
         responseWithCookieVisitorId(collectorConfig.applicationConfig.cookieName, collectorConfig.applicationConfig.cookieDomain)

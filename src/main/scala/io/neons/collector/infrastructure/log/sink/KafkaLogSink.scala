@@ -16,12 +16,9 @@ class KafkaLogSink @Inject()(kafkaProducer: KafkaProducer[UUID, Log], collectorC
     kafkaProducer.send(
       new ProducerRecord[UUID, Log](collectorConfig.sink.kafkaSinkConfig.topic, UUID.fromString(log.requestUuidL), log),
       (md: RecordMetadata, e: Exception) => {
-        if (md != null) {
-          promise.success(md.toString)
-        }
-
-        if (e != null) {
-          promise.failure(e)
+        Option(md) match {
+          case Some(x) => promise.success(x.toString)
+          case None =>promise.failure(e)
         }
       }
     )
