@@ -9,7 +9,7 @@ lazy val root = (project in file(".")).
     inThisBuild(List(
       organization := "neons",
       scalaVersion := "2.12.1",
-      version      := "1.0.0"
+      version      := "1.0.1"
     )),
     name := "collector",
     libraryDependencies ++= Seq(
