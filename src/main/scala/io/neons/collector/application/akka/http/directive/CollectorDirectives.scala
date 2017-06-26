@@ -3,9 +3,9 @@ package io.neons.collector.application.akka.http.directive
 import java.util.{Base64, UUID}
 
 import akka.http.scaladsl.coding.Gzip
-import akka.http.scaladsl.model.{DateTime, HttpEntity, HttpResponse}
+import akka.http.scaladsl.model._
 import akka.http.scaladsl.model.MediaTypes._
-import akka.http.scaladsl.model.headers.{HttpCookie, RawHeader}
+import akka.http.scaladsl.model.headers._
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 import io.neons.collector.infrastructure.log.builder.AkkaHttpLogBuilder
@@ -62,7 +62,7 @@ trait CollectorDirectives {
     HttpCookie(name,
       value = value,
       domain = Some(domain),
-      expires = Some(DateTime(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 30 * 365))),
+      maxAge = Some(2 * 60 * 24 * 30 * 365),
       path = Some("/")
     )
   }

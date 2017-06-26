@@ -6,7 +6,7 @@ import akka.http.scaladsl.model.MediaTypes.`image/gif`
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.model.headers.RawHeader
 import io.neons.collector.application.akka.http.directive.TransparentPixel
-import io.neons.testcase.CollectorConfigTestCase
+import io.neons.collector.testcase.CollectorConfigTestCase
 import org.scalatest.{FlatSpec, Matchers}
 
 class AkkaHttpLogBuilderSpec extends FlatSpec with Matchers with CollectorConfigTestCase {

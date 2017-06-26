@@ -1,4 +1,4 @@
-package io.neons.testcase
+package io.neons.collector.testcase
 
 import io.neons.collector.application.config._
 

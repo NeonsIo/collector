@@ -3,7 +3,7 @@ package io.neons.collector.application.akka.http.router
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import io.neons.collector.infrastructure.log.builder.AkkaHttpLogBuilder
 import io.neons.collector.model.log.{Log, LogHeaderBag, LogSink}
-import io.neons.testcase.CollectorConfigTestCase
+import io.neons.collector.testcase.CollectorConfigTestCase
 import org.scalatest.{Matchers, WordSpecLike}
 import org.scalatest.mockito.MockitoSugar
 

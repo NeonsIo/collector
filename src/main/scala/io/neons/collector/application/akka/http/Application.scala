@@ -17,6 +17,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 
 object Application {
+  val portBinding = "0.0.0.0"
   val injector = Guice.createInjector(
     new AkkaModule(),
     new ActorMaterializerModule(),
@@ -31,10 +32,10 @@ object Application {
   implicit val materializer = injector.getInstance(classOf[ActorMaterializer])
   implicit val executionContext = actorSystem.dispatcher
 
-  implicit def myExceptionHandler: ExceptionHandler =
+  implicit def exceptionHandler: ExceptionHandler =
     ExceptionHandler {
       case ex: Exception => ctx => {
-        ctx.log.error(ex, "Uri: " + ctx.request.uri.toString())
+        ctx.log.error(ex, "Uri: " + ctx.request.uri.toString() + "Headers: " + ctx.request.headers)
         ctx.complete(HttpResponse(StatusCodes.InternalServerError, entity = "Internal server error"))
       }
     }
@@ -42,7 +43,7 @@ object Application {
   def main(args: Array[String]) {
     val bindingFuture = Http().bindAndHandle(
       injector.getInstance(classOf[Router]).retrieve,
-      "0.0.0.0",
+      portBinding,
       config.applicationConfig.port
     )
 
