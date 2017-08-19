@@ -7,6 +7,7 @@ import io.github.lhotari.akka.http.health.HealthEndpoint
 import io.neons.collector.application.config.CollectorConfig
 import io.neons.collector.application.akka.http.directive.CollectorDirectives._
 import io.neons.collector.model.log.{LogBuilder, LogSink}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class ApplicationRouter @Inject()(collectorConfig: CollectorConfig, logBuilder: LogBuilder, logSink: LogSink) extends Router {

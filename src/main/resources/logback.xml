@@ -13,9 +13,12 @@
         <encoder>
             <pattern>%date{ISO8601} %-5level %-5level %logger{36} %X{sourceThread} - %msg%n</pattern>
         </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
     </appender>
 
-    <root level="ERROR">
+    <root level="DEBUG" >
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>

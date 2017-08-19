@@ -47,8 +47,10 @@ object Application {
       config.applicationConfig.port
     )
 
+    actorSystem.log.info(s"Start application with config $config")
+
     scala.sys.addShutdownHook {
-      println("Terminating...")
+      actorSystem.log.info("Terminating...")
       bindingFuture
         .flatMap(_.unbind())
         .onComplete { _ =>
@@ -56,7 +58,7 @@ object Application {
           actorSystem.terminate()
         }
       Await.result(actorSystem.whenTerminated, 60.seconds)
-      println("Terminated... Bye")
+      actorSystem.log.info("Terminated... Bye")
     }
   }
 }
